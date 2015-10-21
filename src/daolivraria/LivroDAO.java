@@ -14,12 +14,15 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 public class LivroDAO {
     
     private Connection con;
     private Statement stmt1;
+    public int contcons ;
     
     public LivroDAO() {
         try {
@@ -165,7 +168,7 @@ public class LivroDAO {
     public LivroTO findbytitle(String title) {
         try {
             ResultSet rs = this.stmt1.executeQuery("select * from livros where titulo like '%" + title +"%'");
-            if (rs.next()) {
+            if (rs.next()) {               
                 LivroTO res = new LivroTO();
                 res.setLivro_id(rs.getInt("livro_id"));
                 res.setTitulo(rs.getString("titulo"));

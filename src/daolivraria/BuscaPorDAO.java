@@ -5,6 +5,13 @@
  */
 package daolivraria;
 
+import java.util.ArrayList;
+import daolivraria.ModeloTabela;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ListSelectionModel;
+
 /**
  *
  * @author Marlon Prudente <marlonmateuspr@gmail.com>
@@ -31,7 +38,7 @@ public class BuscaPorDAO extends javax.swing.JFrame {
         buscar = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabela = new javax.swing.JTable();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
@@ -44,6 +51,7 @@ public class BuscaPorDAO extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Consulta Livros");
 
         jLabel1.setText("Buscar por Titulo ");
 
@@ -54,7 +62,7 @@ public class BuscaPorDAO extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -65,7 +73,7 @@ public class BuscaPorDAO extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabela);
 
         primeiro.setText("Primeiro");
         primeiro.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +145,7 @@ public class BuscaPorDAO extends javax.swing.JFrame {
                         .addComponent(ultimo)
                         .addContainerGap())))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -177,8 +185,31 @@ public class BuscaPorDAO extends javax.swing.JFrame {
 
     private void buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarActionPerformed
         // TODO add your handling code here:
-        LivroDAO lista = new LivroDAO();         
-        String title = jTextField1.getText().trim();        
+        LivroDAO lista = new LivroDAO();        
+        String title = jTextField1.getText().trim();
+        String [] colunas = new String[]{"TITULO", "AUTOR", "PRECO"};
+       int contador = 3;
+        ArrayList dados = new ArrayList();
+        System.out.print("Estou aqui! contador: " /*+ contador*/);
+        while(contador != 0){
+            System.out.print("Estou aqui!");
+           contador--;
+            dados.add(new Object[]{lista.findbytitle(title).getTitulo(),lista.findbytitle(title).getAutor(),lista.findbytitle(title).getPreco()});
+        }
+        ModeloTabela modelo;
+        modelo = new ModeloTabela(dados, colunas);
+        
+        tabela.setModel(modelo);
+        tabela.getColumnModel().getColumn(0).setPreferredWidth(250);
+        tabela.getColumnModel().getColumn(0).setResizable(true);
+        tabela.getColumnModel().getColumn(1).setPreferredWidth(180);
+        tabela.getColumnModel().getColumn(1).setResizable(true);
+        tabela.getColumnModel().getColumn(2).setPreferredWidth(90);
+        tabela.getColumnModel().getColumn(2).setResizable(true);
+        tabela.getTableHeader().setReorderingAllowed(false);
+        tabela.setAutoResizeMode(tabela.AUTO_RESIZE_OFF);
+        tabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
         jTextField2.setText(lista.findbytitle(title).getTitulo());
         jTextField3.setText(lista.findbytitle(title).getAutor());
         jTextField4.setText(Double.toString(lista.findbytitle(title).getPreco()));
@@ -263,13 +294,13 @@ public class BuscaPorDAO extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JButton primeiro;
     private javax.swing.JButton proximo;
+    private javax.swing.JTable tabela;
     private javax.swing.JButton ultimo;
     // End of variables declaration//GEN-END:variables
     private LivroDAO navegar = new LivroDAO();

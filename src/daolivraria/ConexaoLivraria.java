@@ -16,9 +16,9 @@ public class ConexaoLivraria {
     public static Connection getConnectionLivraria() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://100.43.1.160/livraria";
-            String usuario = "root";
-            String senha = "mpo121991";
+            String url = "jdbc:mysql://200.134.10.33/livraria1562339";
+            String usuario = "banco120132";
+            String senha = "$$dafuq";
             Connection con = DriverManager.getConnection(url, usuario, senha);
 
             return con;
